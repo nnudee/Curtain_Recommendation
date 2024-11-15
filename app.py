@@ -29,8 +29,8 @@ def predict_curtain_type(query):
     return name[top_k_indices[0]]
 
 # สร้าง UI ด้วย Streamlit
-st.title("ผ้าม่านที่เหมาะสมกับห้องของคุณ")
-query = st.text_input("กรุณากรอกคำอธิบายของห้องของคุณ")
+st.title("ผ้าม่านที่เหมาะสมกับความต้องการของคุณ")
+query = st.text_input("กรุณากรอกคำอธิบายของผ้าม่านที่คุณต้องการ")
 
 if query:
     result = predict_curtain_type(query)
