@@ -14,7 +14,7 @@ if isinstance(embeddings, list):
     embeddings = torch.stack(embeddings)
 
 # โหลดข้อมูล `name` จากไฟล์ CSV
-name_df = pd.read_csv("names.csv")  # ระบุชื่อไฟล์ CSV ของคุณ
+name_df = pd.read_csv("Query+.csv")  # ระบุชื่อไฟล์ CSV ของคุณ
 name = name_df["Name"].tolist()  # สร้าง list ของชื่อผ้าม่าน
 
 # ฟังก์ชันสำหรับรับ input จากผู้ใช้
