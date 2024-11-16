@@ -24,7 +24,7 @@ def predict_curtain_type(query):
 
 # สร้าง UI
 st.title("ผ้าม่านที่เหมาะสมกับห้องของคุณ")
-query = st.text_input("กรุณากรอกคำอธิบายของห้องของคุณ")
+query = st.text_input("กรุณากรอกคำอธิบายลักษณะผ้าม่านที่คุณต้องการ")
 
 if query:
     results = predict_curtain_type(query)
