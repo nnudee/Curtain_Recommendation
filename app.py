@@ -19,7 +19,7 @@ name_df = pd.read_csv("name-2.csv")
 def predict_curtain_type(query):
     query_embedding = model.encode(query, convert_to_tensor=True)
     cosine_scores = util.cos_sim(query_embedding, embeddings)
-    top_k_indices = torch.topk(cosine_scores.flatten(), 5).indices 
+    top_k_indices = torch.topk(cosine_scores.flatten(), 8).indices 
     return name_df.iloc[top_k_indices.tolist()] 
 
 # สร้าง UI
