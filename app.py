@@ -29,10 +29,11 @@ query = st.text_input("กรุณากรอกคำอธิบายขอ
 if query:
     results = predict_curtain_type(query)
     for _, row in results.iterrows():
-        st.write(f"### {row['Name']}")  # 
-        st.write(f"**คำอธิบาย:** {row['Desc']}")  
-        image_path = f"images/{row['images']}"
+        st.write(f"### {row['Name']}")  # ชื่อผ้าม่าน
+        st.write(f"**คำอธิบาย:** {row['Desc']}")  # คำอธิบายผ้าม่าน
+        # ใช้เส้นทางที่ตรงกับโฟลเดอร์รูปภาพ
+        image_path = f"PIC_Curtain/{row['images']}"
         try:
-            st.image(Image.open(image_path), use_column_width=True)
+            st.image(Image.open(image_path), use_column_width=True)  # แสดงรูปภาพ
         except FileNotFoundError:
             st.write(f"ไม่พบรูปภาพ: {image_path}")
