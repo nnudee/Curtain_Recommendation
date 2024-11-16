@@ -19,8 +19,8 @@ name_df = pd.read_csv("name-2.csv")
 def predict_curtain_type(query):
     query_embedding = model.encode(query, convert_to_tensor=True)
     cosine_scores = util.cos_sim(query_embedding, embeddings)
-    top_k_indices = torch.topk(cosine_scores.flatten(), 5).indices  # 5 ชนิด
-    return name_df.iloc[top_k_indices.tolist()]  # คืนผลลัพธ์เป็น DataFrame
+    top_k_indices = torch.topk(cosine_scores.flatten(), 5).indices 
+    return name_df.iloc[top_k_indices.tolist()] 
 
 # สร้าง UI
 st.title("ผ้าม่านที่เหมาะสมกับห้องของคุณ")
