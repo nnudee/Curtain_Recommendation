@@ -13,7 +13,7 @@ if isinstance(embeddings, list):
     embeddings = torch.stack(embeddings)
 
 # โหลดข้อมูลม่านจาก CSV
-name_df = pd.read_csv("names.csv")
+name_df = pd.read_csv("name-2.csv")
 
 # ฟังก์ชันพยากรณ์
 def predict_curtain_type(query):
@@ -29,6 +29,10 @@ query = st.text_input("กรุณากรอกคำอธิบายขอ
 if query:
     results = predict_curtain_type(query)
     for _, row in results.iterrows():
-        st.write(f"**ชื่อผ้าม่าน:** {row['Name']}")
+        st.write(f"### {row['Name']}")  # ชื่อผ้าม่าน
+        st.write(f"**คำอธิบาย:** {row['Description']}")  # คำอธิบาย
         image_path = f"images/{row['Image']}"  # สร้างเส้นทางรูปภาพ
-        st.image(Image.open(image_path), use_column_width=True)  # แสดงรูปภาพ
+        try:
+            st.image(Image.open(image_path), use_column_width=True)  # แสดงรูปภาพ
+        except FileNotFoundError:
+            st.write(f"ไม่พบรูปภาพ: {image_path}")
