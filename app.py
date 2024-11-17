@@ -2,28 +2,24 @@ import streamlit as st
 from sentence_transformers import SentenceTransformer, util
 import pandas as pd
 import torch
-from PIL import Image  # สำหรับแสดงรูปภาพ
+from PIL import Image  
 
-# โหลดโมเดล
 model = SentenceTransformer("nnudee/Curtain_Recommendation")
 
-# โหลด embeddings
 embeddings = torch.load('tensor+.pt')
 if isinstance(embeddings, list):
     embeddings = torch.stack(embeddings)
 
-# โหลดข้อมูลม่านจาก CSV
 name_df = pd.read_csv("name-2.csv")
 
-# ฟังก์ชันพยากรณ์
 def predict_curtain_type(query):
     query_embedding = model.encode(query, convert_to_tensor=True)
-    cosine_scores = util.cos_sim(query_embedding, embeddings).flatten()  # คำนวณ cosine similarity
-    top_k_indices = torch.topk(cosine_scores, 10).indices  # เลือก 10 อันดับแรก
-    top_k_scores = cosine_scores[top_k_indices].tolist()  # เก็บคะแนนของ 10 อันดับ
-    results = name_df.iloc[top_k_indices.tolist()].copy()  # ดึงข้อมูลม่าน
-    results['Score'] = top_k_scores  # เพิ่มคอลัมน์คะแนน
-    results = results.sort_values(by='Score', ascending=False)  # เรียงลำดับตามคะแนน
+    cosine_scores = util.cos_sim(query_embedding, embeddings).flatten() 
+    top_k_indices = torch.topk(cosine_scores, 10).indices  
+    top_k_scores = cosine_scores[top_k_indices].tolist()  
+    results = name_df.iloc[top_k_indices.tolist()].copy()  
+    results['Score'] = top_k_scores 
+    results = results.sort_values(by='Score', ascending=False)  
     return results
 
 # สร้าง UI
@@ -33,11 +29,11 @@ query = st.text_input("กรุณากรอกคำอธิบายลั
 if query:
     results = predict_curtain_type(query)
     for _, row in results.iterrows():
-        st.write(f"### {row['Name']}")  # ชื่อผ้าม่าน
-        st.write(f"**คำอธิบาย:** {row['Desc']}")  # คำอธิบายผ้าม่าน
-        # ใช้เส้นทางที่ตรงกับโฟลเดอร์รูปภาพ
+        st.write(f"### {row['Name']}")  
+        st.write(f"**คำอธิบาย:** {row['Desc']}") 
+            
         image_path = f"PIC_Curtain/{row['images']}"
         try:
-            st.image(Image.open(image_path), use_column_width=True)  # แสดงรูปภาพ
+            st.image(Image.open(image_path), use_column_width=True)  
         except FileNotFoundError:
             st.write(f"ไม่พบรูปภาพ: {image_path}")
